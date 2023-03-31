@@ -1,0 +1,162 @@
+
+Table "User" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "firstName" String
+  "lastName" String
+  "isBanned" Boolean
+  "email" String [unique, not null]
+  "password" String [not null]
+  "role" String [not null]
+  "numberPhone" int
+}
+
+Table "Salarier" {
+  "id" String [pk]
+  "teamId" String
+  "userId" String
+}
+
+Table "RH" {
+  "id" String [pk]
+  "companyId" String
+  "userId" String
+}
+
+Table "Group" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "name" String [unique, not null]
+  "companyId" String
+}
+
+Table "Team" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "name" String [unique, not null]
+  "isDefault" Boolean
+  "groupId" String
+}
+
+Table "Skill" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "name" String [not null]
+  "description" String
+  "image" String
+  "active" Boolean
+  "badgeActive" String
+  "badgeDesactive" String
+}
+
+Table "Chapter" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "name" String [not null]
+  "image" String
+  "description" String
+  "type" String
+  "order" int
+  "skillId" String
+  "path" String
+}
+
+Table "Training" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "title" String
+  "description" String
+  "chapterId" String
+}
+
+Table "Programme" {
+  "groupId" int
+  "skillId" int
+  "startDate" DateTime
+  "endDate" DateTime
+  "active" Boolean
+  "coachName" String
+  "dateCoach" DateTime
+  "order" int
+  "info" json
+}
+
+Table "Support" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "description" String
+  "userId" String
+}
+
+Table "Facture" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "companyId" String
+  "description" String
+}
+
+Table "Company" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "name" String [not null]
+  "email" String
+  "active" String
+}
+
+Table "Response" {
+  "createdAt" DateTime [not null, default: `now()`]
+  "id" String [pk]
+  "updatedAt" DateTime
+  "deletedAt" DateTime
+  "SalarierId" String [not null]
+  "chapterId" String [not null]
+  "response" Json [not null]
+  "withTraning" Boolean
+  "progressive" String
+}
+
+Ref:"Chapter"."id" < "Training"."chapterId"
+
+Ref:"Group"."id" < "Programme"."groupId"
+
+Ref:"Skill"."id" < "Programme"."skillId"
+
+Ref:"Team"."id" < "Salarier"."teamId"
+
+Ref:"User"."id" < "Salarier"."userId"
+
+Ref:"User"."id" < "RH"."userId"
+
+Ref:"Salarier"."id" < "Response"."SalarierId"
+
+Ref:"Chapter"."id" < "Response"."chapterId"
+
+Ref:"Skill"."id" < "Chapter"."skillId"
+
+Ref:"User"."id" < "Support"."userId"
+
+Ref:"Company"."id" < "Facture"."companyId"
+
+Ref:"Company"."id" < "Group"."companyId"
+
+Ref:"Group"."id" < "Team"."groupId"
+
+Ref:"Company"."id" < "RH"."companyId"
