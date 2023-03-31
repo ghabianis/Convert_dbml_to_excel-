@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "node dbmlToJson.js"
+  },
+  "dependencies": {
+    "@dbml/core": "^2.5.2",
+    "@nerdify/dsl-dbscheme": "github:nerdify/dsl-dbscheme",
+    "domparser": "^0.1.1",
+    "fs": "^0.0.1-security",
+    "jsdom": "^21.1.1",
+    "xlsx": "^0.18.5"
+  }
+}
