@@ -12,3 +12,4 @@ all what you have to do in order to run the project is:
 - npm run start
 
 ```
+@copyright ghabianis
