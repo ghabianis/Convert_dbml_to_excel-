@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="file">Select a .dbml file:</label>
+    <input type="file" id="file" name="file" accept=".dbml">
+    <button type="button" onclick="upload()">Upload</button>
+  </form>
+</body>
+<script>
+    function upload() {
+  const fileInput = document.getElementById('file');
+  const file = fileInput.files[0];
+  
+  if (file.type !== 'application/octet-stream' || !file.name.endsWith('.dbml')) {
+    alert('Invalid file type. Please select a .dbml file.');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  fetch('/upload', {
+    method: 'POST',
+    body: formData
+  }).then(response => {
+    if (response.ok) {
+      alert('File uploaded successfully!');
+    } else {
+      alert('Error uploading file. Please try again later.');
+    }
+  }).catch(error => {
+    alert('Error uploading file. Please try again later.');
+  });
+}
+</script>
+</html>
