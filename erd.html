@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <title>Export Excel From Json</title>
+    <style>
+        body {
+            margin: auto;
+            width: 640px;
+            padding: 50px;
+            font-family: "Lexend Deca", sans-serif;
+            color: #2e475d;
+        }
+
+        .description {
+            margin-top: 20%;
+        }
+
+        .text-wrap {
+            position: relative;
+            background-color: #eee;
+            padding: 2em;
+        }
+
+        textarea {
+            min-width: 20vw;
+            max-width: 80vw;
+            min-height: 200px;
+            max-height: 80vh;
+            padding: 0.8em 1em;
+            font-size: 1em;
+
+        }
+
+        textarea::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        textarea::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .clipboard.icon {
+            position: absolute;
+            top: 2.3em;
+            right: 2.5em;
+            margin-top: 4px;
+            margin-left: 4px;
+            width: 11px;
+            height: 13px;
+            border: solid 1px #333333;
+            border-top: none;
+            border-radius: 1px;
+            cursor: pointer;
+        }
+
+        .clipboard.icon:before {
+            top: -1px;
+            left: 2px;
+            width: 5px;
+            height: 1px;
+            border: solid 1px #333333;
+            border-radius: 1px;
+        }
+
+        .clipboard.icon:after {
+            width: 3px;
+            height: 1px;
+            background-color: #333333;
+            box-shadow: 8px 0 0 0 #333333;
+        }
+
+        .icon:before,
+        .icon:after {
+            content: '';
+            position: absolute;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-outline">
+        <label class="form-label" for="textAreaExample">Insert Json Data: </label>
+        <span class="text" style="visibility: hidden;opacity: 0.5;float: right;" id="cp">copied!</span>
+        <textarea class="form-control" id="data" rows="20">
+
+    </textarea>
+        <div id="copyToClipboard-a" class="clipboard icon">
+            <span id="copyme" onmouseover="copy()"></span>
+        </div>
+    </div>
+    <button onclick="convertERDToExcel()" class="btn btn-primary btn-circle mt-2" style="float: right">
+        Export
+    </button>
+    <button onclick="deleteData()" class="btn btn-danger btn-circle mt-2 mr-2" style="float: right">
+        Delete
+    </button>
+    <p class="description">
+    <h2>Dbml data structure example :</h2>
+    <br>
+    <pre>
+    <code>
+        Table "dbo.TagSynonyms" {
+
+              Id int [pk]
+              SourceTagName nvarchar(35)
+              TargetTagName nvarchar(35)
+              CreationDate datetime
+              OwnerUserId int
+              AutoRenameCount int
+              LastAutoRename datetime
+              Score int
+              ApprovedByUserId int
+              ApprovalDate datetime
+
+        },
+        Ref: "dbo.PostFeedback".(PostId) > "dbo.Posts".(Id)
+</code></pre>
+    </p>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mocha/1.0.2/package/lib/browser/fs.js"></script>
+    <script type="text/javascript" src="https://www.jsdelivr.com/package/npm/@dbml/core"></script>
+</body>
+
+</html>

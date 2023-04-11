@@ -1,162 +1,369 @@
+Table "dbo.Posts"
+{
 
-Table "User" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "firstName" String
-  "lastName" String
-  "isBanned" Boolean
-  "email" String [unique, not null]
-  "password" String [not null]
-  "role" String [not null]
-  "numberPhone" int
+    Id int [pk]
+    PostTypeId tinyint
+    CreationDate datetime
+    Score int
+    Body nvarchar(max)
+    OwnerUserId int
+    LastEditorUserId int
+    LastEditDate datetime
+    LastActivityDate datetime
+    LastActivityUserId int
+    ParentId int
+    AcceptedAnswerId int
+    Title nvarchar(250)
+    Tags nvarchar(250)
+    CommunityOwnedDate datetime
+    HistorySummary nvarchar(150)
+    AnswerScore int
+    AnswerCount int
+    CommentCount int
+    FavoriteCount int
+    DeletionDate datetime
+    ClosedDate datetime
+    LockedDate datetime
+    OwnerDisplayName nvarchar(40)
+    LastEditorDisplayName nvarchar(40)
+    BountyAmount int
+    BountyCloses datetime
+    BountyClosed datetime
+    LastOwnerEmailDate datetime
+    ProtectedDate datetime
+    MigrationDate datetime
+    IsAcceptedAnswer bit
+    LastChange timestamp
+    IsAnswered bit
+    HasNotices bit
+    IsFrozen bit
+    QualityScore smallint
+    IsClosedAsDuplicate bit
+    LastActivityTypeId tinyint
+    OwnerIsNewPoster bit
+    HasOneboxes bit
+    LicenseVersion tinyint
+    ReactionCount int
+    Reaction1Count smallint
+    Reaction2Count smallint
+    Reaction3Count smallint
+    Reaction4Count smallint
+    Reaction5Count smallint
+    Reaction6Count smallint
+    Reaction7Count smallint
+    Reaction8Count smallint
+    PostState tinyint
 }
 
-Table "Salarier" {
-  "id" String [pk]
-  "teamId" String
-  "userId" String
+Table "dbo.Badges"
+{
+
+    Id int [pk]
+    Class tinyint
+    Name nvarchar(50)
+    Description nvarchar(max)
+    Single bit
+    Secret bit
+    TagBased bit
+    AwardFrequency int
+    BadgeReasonTypeId tinyint
+    IsCode bit
+    AwardedCount int
 }
 
-Table "RH" {
-  "id" String [pk]
-  "companyId" String
-  "userId" String
+Table "dbo.PostFeedback"
+{
+
+    Id int [pk]
+    PostId int
+    IPAddress varchar(15)
+    UserId int
+    VoteTypeId tinyint
+    CreationDate datetime
 }
 
-Table "Group" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "name" String [unique, not null]
-  "companyId" String
+Table "dbo.PostHistory"
+{
+
+    Id int [pk]
+    PostHistoryTypeId tinyint
+    PostId int
+    RevisionGUID uniqueidentifier
+    CreationDate datetime
+    IPAddress varchar(15)
+    UserId int
+    Comment nvarchar(400)
+    Text nvarchar(max)
+    UserDisplayName nvarchar(40)
+    ApplicationId int
 }
 
-Table "Team" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "name" String [unique, not null]
-  "isDefault" Boolean
-  "groupId" String
+Table "dbo.PostHistoryTypes"
+{
+
+    Id tinyint [pk]
+    Name nvarchar(50)
+    Description nvarchar(300)
 }
 
-Table "Skill" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "name" String [not null]
-  "description" String
-  "image" String
-  "active" Boolean
-  "badgeActive" String
-  "badgeDesactive" String
+Table "dbo.PostLinks"
+{
+
+    Id int [pk]
+    CreationDate datetime
+    PostId int
+    RelatedPostId int
+    LinkTypeId tinyint
+    Rank tinyint
 }
 
-Table "Chapter" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "name" String [not null]
-  "image" String
-  "description" String
-  "type" String
-  "order" int
-  "skillId" String
-  "path" String
+Table "dbo.PostNotices"
+{
+
+    Id int [pk]
+    PostId int
+    PostNoticeTypeId int
+    CreationDate datetime
+    DeletionDate datetime
+    ExpiryDate datetime
+    Body nvarchar(max)
+    OwnerUserId int
+    DeletionUserId int
+    LastChange timestamp
 }
 
-Table "Training" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "title" String
-  "description" String
-  "chapterId" String
+Table "dbo.PostNoticeTypes"
+{
+
+    Id int [pk]
+    ClassId tinyint
+    Name nvarchar(80)
+    Body nvarchar(max)
+    IsHidden bit
+    Predefined bit
+    PostNoticeDurationId int
 }
 
-Table "Programme" {
-  "groupId" int
-  "skillId" int
-  "startDate" DateTime
-  "endDate" DateTime
-  "active" Boolean
-  "coachName" String
-  "dateCoach" DateTime
-  "order" int
-  "info" json
+Table "dbo.PostTags"
+{
+
+    PostId int
+    TagId int
 }
 
-Table "Support" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "description" String
-  "userId" String
+Table "dbo.PostTypes"
+{
+
+    Id tinyint [pk]
+    Name nvarchar(50)
+    Description nvarchar(300)
 }
 
-Table "Facture" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "companyId" String
-  "description" String
+Table "dbo.ReviewRejectionReasons"
+{
+
+    Id tinyint [pk]
+    Name nvarchar(100)
+    Description nvarchar(300)
+    PostTypeId tinyint
+    IsHidden bit
 }
 
-Table "Company" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "name" String [not null]
-  "email" String
-  "active" String
+Table "dbo.ReviewTaskResults"
+{
+
+    Id int [pk]
+    ReviewTaskId int
+    ReviewTaskResultTypeId tinyint
+    UserId int
+    CreationDate datetime
+    DeletionDate datetime
+    PostCommentId int
+    RejectionReasonId tinyint
+    Comment nvarchar(150)
+    ResultSubtypeFlags int
+    DurationMs int
+    AuditPassed bit
+    ReviewTaskTypeId tinyint
 }
 
-Table "Response" {
-  "createdAt" DateTime [not null, default: `now()`]
-  "id" String [pk]
-  "updatedAt" DateTime
-  "deletedAt" DateTime
-  "SalarierId" String [not null]
-  "chapterId" String [not null]
-  "response" Json [not null]
-  "withTraning" Boolean
-  "progressive" String
+Table "dbo.ReviewTaskResultTypes"
+{
+
+    Id tinyint [pk]
+    Name nvarchar(100)
+    Description nvarchar(300)
 }
 
-Ref:"Chapter"."id" < "Training"."chapterId"
+Table "dbo.ReviewTasks"
+{
 
-Ref:"Group"."id" < "Programme"."groupId"
+    Id int [pk]
+    ReviewTaskTypeId tinyint
+    CreationDate datetime
+    DeletionDate datetime
+    ReviewTaskState tinyint
+    IsAudit bit
+    PostId int
+    SuggestedEditId int
+    AuditPositivity bit
+    AuditTitle nvarchar(max)
+    AuditBody nvarchar(max)
+    AuditComment nvarchar(max)
+    ValidResultCount tinyint
+    CreationReason tinyint
+}
 
-Ref:"Skill"."id" < "Programme"."skillId"
+Table "dbo.ReviewTaskStates"
+{
 
-Ref:"Team"."id" < "Salarier"."teamId"
+    Id tinyint [pk]
+    Name nvarchar(50)
+    Description nvarchar(300)
+}
 
-Ref:"User"."id" < "Salarier"."userId"
+Table "dbo.ReviewTaskTypes"
+{
 
-Ref:"User"."id" < "RH"."userId"
+    Id tinyint [pk]
+    Name nvarchar(50)
+    Description nvarchar(300)
+}
 
-Ref:"Salarier"."id" < "Response"."SalarierId"
+Table "dbo.SuggestedEdits"
+{
 
-Ref:"Chapter"."id" < "Response"."chapterId"
+    Id int [pk]
+    PostId int
+    CreationDate datetime
+    ApprovalDate datetime
+    RejectionDate datetime
+    OwnerUserId int
+    OwnerUserIPAddress varchar(15)
+    OwnerUserCookieGuid uniqueidentifier
+    Comment nvarchar(800)
+    Text nvarchar(max)
+    Title nvarchar(250)
+    Tags nvarchar(250)
+    RevisionGUID uniqueidentifier
+    RejectionReasonId tinyint
+    ApplicationId int
+    IsSignificant bit
+}
 
-Ref:"Skill"."id" < "Chapter"."skillId"
+Table "dbo.Tags"
+{
 
-Ref:"User"."id" < "Support"."userId"
+    Id int [pk]
+    Name nvarchar(35)
+    Count int
+    UserId int
+    CreationDate datetime
+    IsModeratorOnly bit
+    IsRequired bit
+    WikiPostId int
+    IsProtected bit
+    ExcerptPostId int
+    CodeLanguage nvarchar(50)
+    LastActivityDate datetime
+    AnswerScoreTop1Percent numeric(18,2)
+    AnswerScoreTop5Percent numeric(18,2)
+    AnswerScoreTop10Percent numeric(18,2)
+    AnswerScoreTop20Percent numeric(18,2)
+    AnswerScoreTop30Percent numeric(18,2)
+    FriendlyName nvarchar(50)
+    IsDiverged bit
+    IsArticleRequired bit
+}
 
-Ref:"Company"."id" < "Facture"."companyId"
+Table "dbo.TagSynonyms"
+{
 
-Ref:"Company"."id" < "Group"."companyId"
+    Id int [pk]
+    SourceTagName nvarchar(35)
+    TargetTagName nvarchar(35)
+    CreationDate datetime
+    OwnerUserId int
+    AutoRenameCount int
+    LastAutoRename datetime
+    Score int
+    ApprovedByUserId int
+    ApprovalDate datetime
+}
 
-Ref:"Group"."id" < "Team"."groupId"
+Table "dbo.Users"
+{
 
-Ref:"Company"."id" < "RH"."companyId"
+    Id int [pk]
+    UserTypeId tinyint
+    Reputation int
+    Views int
+    CreationDate datetime
+    LastAccessDate datetime
+    HasReplies bit
+    OptInEmail bit
+    LastLoginDate datetime
+    LastEmailDate datetime
+    LastLoginIP nvarchar(15)
+    Email nvarchar(100)
+    DisplayName nvarchar(40)
+    WebsiteUrl nvarchar(200)
+    RealName nvarchar(100)
+    Location nvarchar(100)
+    PreferencesRaw nvarchar(max)
+    TimedPenaltyDate datetime
+    LastDailySiteAccessDate datetime
+    DisplayNameLower nvarchar(40)
+    VerifiedEmail bit
+    DaysVisitedConsecutive int
+    DaysVisitedTotal int
+    LastModifiedDate datetime
+    IsVeteran bit
+    ReputationWeek int
+    ReputationMonth int
+    ReputationQuarter int
+    ReputationYear int
+    ReputationSinceLastCheck int
+    AcceptRateAsked smallint
+    AcceptRateAccepted smallint
+    ReputationToday int
+    AccountId int
+    ProfileImageUrl nvarchar(200)
+    HasAboutMeExcerpt bit
+    SignupStarted bit
+    Title nvarchar(225)
+    TeamId int
+    TeamName nvarchar(150)
+    BronzeBadges int
+    SilverBadges int
+    GoldBadges int
+    JobSearchStatus tinyint
+    Flags bigint
+    QuestionCount int
+    AnswerCount int
+    HasQuestionLists bit
+    ChannelInlineOnboardingFlags bigint
+}
+
+Ref: "dbo.PostFeedback".(PostId) > "dbo.Posts".(Id)
+Ref: "dbo.Posts".(ParentId) > "dbo.Posts".(Id)
+Ref: "dbo.Posts".(AcceptedAnswerId) > "dbo.Posts".(Id)
+Ref: "dbo.PostHistory".(PostId) > "dbo.Posts".(Id)
+Ref: "dbo.ReviewTasks".(PostId) > "dbo.Posts".(Id)
+Ref: "dbo.PostHistory".(PostHistoryTypeId) > "dbo.PostHistoryTypes".(Id)
+Ref: "dbo.PostNotices".(PostNoticeTypeId) > "dbo.PostNoticeTypes".(Id)
+Ref: "dbo.Posts".(PostTypeId) > "dbo.PostTypes".(Id)
+Ref: "dbo.ReviewRejectionReasons".(PostTypeId) > "dbo.PostTypes".(Id)
+Ref: "dbo.ReviewTaskResults".(RejectionReasonId) > "dbo.ReviewRejectionReasons".(Id)
+Ref: "dbo.ReviewTaskResults".(ReviewTaskResultTypeId) > "dbo.ReviewTaskResultTypes".(Id)
+Ref: "dbo.ReviewTaskResults".(ReviewTaskId) > "dbo.ReviewTasks".(Id)
+Ref: "dbo.ReviewTasks".(ReviewTaskState) > "dbo.ReviewTaskStates".(Id)
+Ref: "dbo.ReviewTasks".(ReviewTaskTypeId) > "dbo.ReviewTaskTypes".(Id)
+Ref: "dbo.ReviewTasks".(SuggestedEditId) > "dbo.SuggestedEdits".(Id)
+Ref: "dbo.Posts".(OwnerUserId) > "dbo.Users".(Id)
+Ref: "dbo.Tags".(UserId) > "dbo.Users".(Id)
+Ref: "dbo.Posts".(LastEditorUserId) > "dbo.Users".(Id)
+Ref: "dbo.Posts".(LastActivityUserId) > "dbo.Users".(Id)
+Ref: "dbo.PostFeedback".(UserId) > "dbo.Users".(Id)
+Ref: "dbo.PostHistory".(UserId) > "dbo.Users".(Id)
+Ref: "dbo.ReviewTaskResults".(UserId) > "dbo.Users".(Id)
