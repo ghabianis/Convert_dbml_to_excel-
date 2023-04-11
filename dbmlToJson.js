@@ -2,7 +2,6 @@ var XLSX = require("xlsx");
 const fs = require("fs");
 const { Parser } = require('@dbml/core');
 
-
 let dataJson = {};
 let sheetNames = [];
 let fields = [];
@@ -231,19 +230,10 @@ function deleteFirstRowOfExcelSheets(filePath) {
             for (let C = range.s.c; C <= range.e.c; ++C) {
                 const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
                 const cell = worksheet[cellRef];
-                const style = {
-                    fill: {
-                      type: 'pattern',
-                      pattern: 'solid',
-                      fgColor: { rgb: 'FFFF0000' } // Red background color
-                    }
-                  };
                 if (cell && cell.t !== 'z') { // skip cells with type `z`, which are placeholders
                     const newRef = XLSX.utils.encode_cell({ r: R - 1, c: C });
                     delete worksheet[cellRef];
                     cell.r = R - 1;
-                    cell.s = style;
-                    console.log('ddd',cell)
                     worksheet[newRef] = cell;
                 }
             }
